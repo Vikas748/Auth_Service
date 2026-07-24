@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
   });
-  User.beforeCreate((user)=>{
+  User.beforeCreate((user)=>{ //in this beforeCreate hook whole user object is available that's by we are able to use user.password
     const encryptedPassword=bcrypt.hashSync(user.password,SALT);
     user.password = encryptedPassword;
   })
