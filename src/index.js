@@ -4,6 +4,8 @@ const bodyParser=require('body-parser');
 const {PORT, JWT_KEY} =require('./config/server-config');
 const apiRoutes=require('./routes/index');
 
+const db=require('./models/index');
+
 const app=express();
 
 // const UserService=require('./services/user-service')
@@ -17,6 +19,11 @@ const prepareAndStartServer = () => {
     
     app.listen(PORT,async() => {
         console.log(`Server started on Port ${PORT}`);
+        if(process.env.DB_SYNC){
+            db.sequelize.sync({alter:true});
+        }
+
+
         // const service=new UserService();
         // const newToken=service.createToken({email:'raivikas748@gmail.com',id : 1});
         // console.log("new token is : ",newToken);
